@@ -1,0 +1,27 @@
+{
+  "name": "auth_gse",
+  "version": "1.0.0",
+  "description": "node -v 23.1.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon bin/www"
+  },
+  "engines": {
+    "node": "=23.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yjns4584/AUTH_GSE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yjns4584/AUTH_GSE/issues"
+  },
+  "homepage": "https://github.com/yjns4584/AUTH_GSE#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  }
+}
