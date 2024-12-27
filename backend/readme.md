@@ -2,13 +2,11 @@
 
 node -v v23.1.0
 
-
 ## Installation
 
 ```shell
 $ npm i
 ```
-
 
 ## Trial
 

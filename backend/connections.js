@@ -13,7 +13,7 @@ exports.pgConnect = async function pgConnect() {
       port: config.postgrest.port,
     })
     await pool.connect()
-    console.info('Base de datos PostgreSQL conectada.')
+    console.info('PostgreSQL conectado.')
   } catch (err) {
     console.error('Error al conectar la base de datos PostgreSQL...', err.message)
     process.exit()
@@ -21,9 +21,9 @@ exports.pgConnect = async function pgConnect() {
 }
 
 exports.mongoConnect = async function mongoConnect() {
-	console.info('Conectando base de datos Mongo...')
+	console.info('Conectando base de datos MongoDB...')
 	await Mongoose.connect(config.mongo, {}).then(() => {
-		console.info('Base de datos Mongo conectada.')
+		console.info('MongoDB conectado.')
 	}).catch((err) => {
 		console.error('Error al conectar la base de datos Mongo...', err.message)
 		process.exit()
