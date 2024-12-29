@@ -1,4 +1,7 @@
 import 'package:app_authgse/features/faceCapture/domain/useCases/converter_to_base64.service.dart';
+import 'package:app_authgse/features/faceCapture/presentation/widgets/face_display.dart';
+import 'package:app_authgse/features/faceCapture/presentation/widgets/take_photo.dart';
+import 'package:app_authgse/features/faceCapture/services/api.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app_authgse/features/faceCapture/domain/useCases/camera_gallery.service.dart';
 import 'dart:io';
@@ -29,6 +32,9 @@ class _FaceCaptureState extends State<FaceCapture> {
           _base64Image = base64;
         });
         logger.info('Imagen en Base64: $_base64Image');
+
+        //TODO: ENVIAR AL SERVIDOR
+        sendBase64ToServer(_base64Image);
       }
     }
   }
@@ -47,24 +53,9 @@ class _FaceCaptureState extends State<FaceCapture> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _imagePath == null
-                  ? const Icon(
-                      Icons.person,
-                      size: 150,
-                      color: Colors.grey,
-                    )
-                  : Image.file(
-                      File(_imagePath!),
-                      width: 300,
-                      height: 300,
-                      fit: BoxFit.cover,
-                    ),
+              FaceDisplay(imagePath: _imagePath),
               const SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: _capturePhoto,
-                icon: const Icon(Icons.camera_alt),
-                label: const Text('Tomar foto'),
-              ),
+              TakePhotoButton(onPressed: _capturePhoto),
               const SizedBox(height: 20),
               _base64Image != null
                   ? Text(
