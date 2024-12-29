@@ -1,3 +1,4 @@
+import 'package:app_authgse/core/theme/app_theme.dart';
 import 'package:app_authgse/features/faceCapture/presentation/pages/face_capture.pages.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -16,10 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green.shade100),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       home: FaceCapture(),
     );
   }

@@ -23,7 +23,7 @@ class _FaceCaptureState extends State<FaceCapture> {
   Future<void> _capturePhoto() async {
     final httpService = HttpService();
     final faceService = FaceService(httpService);
-  
+
     final path = await CameraGalleryService().takePhoto();
     if (path != null) {
       setState(() {
@@ -47,8 +47,7 @@ class _FaceCaptureState extends State<FaceCapture> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Datos faciales'),
-        centerTitle: true,
-        elevation: 25,
+        leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
       ),
       body: Center(
         child: Padding(
