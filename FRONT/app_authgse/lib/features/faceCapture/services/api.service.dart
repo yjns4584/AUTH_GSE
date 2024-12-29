@@ -1,24 +1,24 @@
 import 'package:app_authgse/features/faceCapture/presentation/pages/face_capture.pages.dart';
-import 'package:dio/dio.dart';
+import 'package:app_authgse/services/http_service.dart';
 
-Future<void> sendBase64ToServer(base64Image) async {
-  final dio = Dio();
-  final String url = 'https://xzfrbz1n-3000.use2.devtunnels.ms/api/face'; 
+class FaceService {
+  final HttpService _httpService;
 
-  try {
-    final response = await dio.post(
-      url,
-      data: {
-        'imageBase64': base64Image, 
-      },
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json', 
-        },
-      ),
+  FaceService(this._httpService);
+
+  Future<void> sendBase64ToServer(String base64Image) async {
+    const String url = 'https://xzfrbz1n-3000.use2.devtunnels.ms/api/face';
+
+    final response = await _httpService.request(
+      url: url,
+      method: 'POST',
+      data: {'imageBase64': base64Image},
     );
-    logger.warning('Respuesta del servidor: ${response.data}');
-  } catch (e) {
-    print('Error al enviar la información: $e');
+
+    if (response != null && response.statusCode == 200) {
+      logger.info('Respuesta del servidor: ${response.data}');
+    } else {
+      logger.error('Error al enviar la información. Código: ${response?.statusCode}');
+    }
   }
 }

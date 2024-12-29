@@ -2,6 +2,7 @@ import 'package:app_authgse/features/faceCapture/domain/useCases/converter_to_ba
 import 'package:app_authgse/features/faceCapture/presentation/widgets/face_display.dart';
 import 'package:app_authgse/features/faceCapture/presentation/widgets/take_photo.dart';
 import 'package:app_authgse/features/faceCapture/services/api.service.dart';
+import 'package:app_authgse/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:app_authgse/features/faceCapture/domain/useCases/camera_gallery.service.dart';
 import 'package:app_authgse/core/logger.dart';
@@ -20,6 +21,9 @@ class _FaceCaptureState extends State<FaceCapture> {
   String? _base64Image;
 
   Future<void> _capturePhoto() async {
+    final httpService = HttpService();
+    final faceService = FaceService(httpService);
+  
     final path = await CameraGalleryService().takePhoto();
     if (path != null) {
       setState(() {
@@ -33,7 +37,7 @@ class _FaceCaptureState extends State<FaceCapture> {
         logger.info('Imagen en Base64: $_base64Image');
 
         //TODO: ENVIAR AL SERVIDOR
-        sendBase64ToServer(_base64Image);
+        await faceService.sendBase64ToServer(_base64Image!);
       }
     }
   }
