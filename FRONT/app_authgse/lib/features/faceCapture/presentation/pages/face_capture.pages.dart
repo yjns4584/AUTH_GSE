@@ -4,7 +4,6 @@ import 'package:app_authgse/features/faceCapture/presentation/widgets/take_photo
 import 'package:app_authgse/features/faceCapture/services/api.service.dart';
 import 'package:flutter/material.dart';
 import 'package:app_authgse/features/faceCapture/domain/useCases/camera_gallery.service.dart';
-import 'dart:io';
 import 'package:app_authgse/core/logger.dart';
 
 final AppLogger logger = AppLogger();
