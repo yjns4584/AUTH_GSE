@@ -2,6 +2,9 @@ import 'package:app_authgse/features/faceCapture/domain/useCases/converter_to_ba
 import 'package:flutter/material.dart';
 import 'package:app_authgse/features/faceCapture/domain/useCases/camera_gallery.service.dart';
 import 'dart:io';
+import 'package:app_authgse/core/logger.dart';
+
+final AppLogger logger = AppLogger();
 
 class FaceCapture extends StatefulWidget {
   const FaceCapture({super.key});
@@ -25,7 +28,7 @@ class _FaceCaptureState extends State<FaceCapture> {
         setState(() {
           _base64Image = base64;
         });
-        print('Imagen en Base64: $_base64Image');
+        logger.info('Imagen en Base64: $_base64Image');
       }
     }
   }

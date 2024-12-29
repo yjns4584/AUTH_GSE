@@ -1,5 +1,8 @@
 import 'package:app_authgse/features/faceCapture/presentation/pages/face_capture.pages.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+Logger logger = Logger();
 
 void main() {
   runApp(const MyApp());
