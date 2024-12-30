@@ -1,3 +1,4 @@
+import 'package:app_authgse/common/widgets/custom_outline_button.dart';
 import 'package:flutter/material.dart';
 
 class TakePhotoButton extends StatelessWidget {
@@ -7,10 +8,9 @@ class TakePhotoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-      onPressed: onPressed,
-      icon: const Icon(Icons.camera_alt),
-      label: const Text('Tomar foto'),
-    );
+    return SizedBox(
+        width: MediaQuery.of(context).size.width * 0.7,
+        child: CustomOutlinedButton(
+            onPressed: onPressed, label: 'Tomar foto', icon: Icons.camera_alt));
   }
 }
