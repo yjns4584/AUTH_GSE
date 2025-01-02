@@ -7,12 +7,12 @@ class FaceService {
   FaceService(this._httpService);
 
   Future<void> sendBase64ToServer(String base64Image) async {
-    const String url = 'https://xzfrbz1n-3000.use2.devtunnels.ms/api/face';
+    const String url = 'https://f44hgwvn-5000.use2.devtunnels.ms/compare';
 
     final response = await _httpService.request(
       url: url,
       method: 'POST',
-      data: {'imageBase64': base64Image},
+      data: {'image': base64Image},
     );
 
     if (response != null && response.statusCode == 200) {
