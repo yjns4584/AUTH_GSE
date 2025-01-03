@@ -1,10 +1,12 @@
 import 'package:app_authgse/core/theme/app_theme.dart';
+import 'package:app_authgse/features/DocumentServiceCapture/presentation/pages/document_service_capture.dart';
 import 'package:app_authgse/features/captureCedula/presentation/pages/capture_user_cedula.dart';
 import 'package:app_authgse/features/faceCapture/presentation/pages/face_capture.pages.dart';
 import 'package:app_authgse/features/initPage/presentation/pages/init_page.dart';
 import 'package:app_authgse/features/userLogin/presentation/pages/user_login.dart';
 import 'package:app_authgse/features/userRegister/presentation/pages/user_register.pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 
 Logger logger = Logger();
@@ -18,6 +20,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

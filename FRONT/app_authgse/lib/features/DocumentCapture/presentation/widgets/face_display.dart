@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 
 class FaceDisplay extends StatelessWidget {
   final String? imagePath;
-  final Icon icon;
 
-  const FaceDisplay({super.key, required this.imagePath, required this.icon});
+  const FaceDisplay({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,11 @@ class FaceDisplay extends StatelessWidget {
       alignment: Alignment.center,
       child: ClipOval(
         child: imagePath == null
-            ? icon
+            ? Icon(
+                Icons.face,
+                size: 200,
+                color: Colors.white,
+              )
             : Image.file(
                 File(imagePath!),
                 width: 300,
@@ -33,4 +36,3 @@ class FaceDisplay extends StatelessWidget {
     );
   }
 }
-

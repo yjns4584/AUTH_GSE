@@ -13,8 +13,8 @@ class CameraGalleryService {
 
   Future<String?> takePhoto() async {
     final XFile? photo = await _picker.pickImage(
-      maxHeight: 2160,
-      maxWidth: 3840,
+      maxHeight: 300,
+      maxWidth: 300,
       imageQuality: 100,
       source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.front,

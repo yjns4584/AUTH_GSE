@@ -1,46 +1,38 @@
 import 'package:app_authgse/common/widgets/custom_card.dart';
 import 'package:app_authgse/common/widgets/custom_outline_button.dart';
-import 'package:app_authgse/features/faceCapture/domain/useCases/converter_to_base64.service.dart';
-import 'package:app_authgse/features/faceCapture/presentation/widgets/face_display.dart';
-import 'package:app_authgse/features/faceCapture/presentation/widgets/take_photo.dart';
+import 'package:app_authgse/features/DocumentCapture/presentation/pages/document_capture.dart';
+import 'package:app_authgse/features/DocumentServiceCapture/presentation/widgets/face_display.dart';
+import 'package:app_authgse/features/DocumentServiceCapture/presentation/widgets/take_photo.dart';
 import 'package:app_authgse/features/faceCapture/services/api.service.dart';
 import 'package:app_authgse/services/http_service.dart';
 import 'package:flutter/material.dart';
-import 'package:app_authgse/features/faceCapture/domain/useCases/camera_gallery.service.dart';
 import 'package:app_authgse/core/logger.dart';
 
 final AppLogger logger = AppLogger();
 
-class FaceCapture extends StatefulWidget {
-  const FaceCapture({super.key});
+class DocumentCaptureWeb extends StatefulWidget {
+  const DocumentCaptureWeb({super.key});
 
   @override
-  State<FaceCapture> createState() => _FaceCaptureState();
+  State<DocumentCaptureWeb> createState() => _DocumentCaptureWebState();
 }
 
-class _FaceCaptureState extends State<FaceCapture> {
-  String? _imagePath;
+class _DocumentCaptureWebState extends State<DocumentCaptureWeb> {
   String? _base64Image;
   bool _showSendButton = false;
   bool get _canSend => _base64Image != null;
   String? _base64ImageFrontal;
   String? _base64ImageBack;
 
-  Future<void> _capturePhoto() async {
-    final path = await CameraGalleryService().takePhoto();
-    if (path != null) {
-      setState(() {
-        _imagePath = path;
-        _showSendButton = true;
-      });
-      final base64 = await convertImageToBase64(path);
-      if (base64 != null) {
-        setState(() {
-          _base64Image = base64;
-        });
-        logger.info('Imagen en Base64: $_base64Image');
-      }
-    }
+  Future<void> _goToWebService() async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const DocumentCapture(),
+      ),
+    );
+    setState(() {
+      _showSendButton = true;
+    });
   }
 
   Future<void> _sendPhotos() async {
@@ -61,15 +53,19 @@ class _FaceCaptureState extends State<FaceCapture> {
         _base64ImageBack!,
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fotos enviadas exitosamente.')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Fotos enviadas exitosamente.')),
+        );
+      }
     } catch (e) {
       logger.error('Error al enviar fotos: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Error al enviar fotos. Inténtalo nuevamente.')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Error al enviar fotos. Inténtalo nuevamente.')),
+        );
+      }
     }
   }
 
@@ -77,9 +73,11 @@ class _FaceCaptureState extends State<FaceCapture> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Datos faciales'),
-          leading:
-              IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
+          title: const Text('Carga de documento'),
+          leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(Icons.arrow_back),
+          ),
         ),
         body: Center(
           child: Padding(
@@ -94,9 +92,17 @@ class _FaceCaptureState extends State<FaceCapture> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FaceDisplay(
-                        imagePath: _imagePath,
-                        icon: const Icon(Icons.face,
-                            size: 200, color: Colors.white),
+                        icon: _showSendButton
+                            ? const Icon(
+                                Icons.check,
+                                size: 200,
+                                color: Colors.white,
+                              )
+                            : const Icon(
+                                Icons.description,
+                                size: 200,
+                                color: Colors.white,
+                              ),
                       ),
                     ],
                   ),
@@ -110,11 +116,10 @@ class _FaceCaptureState extends State<FaceCapture> {
                         children: [
                           _showSendButton
                               ? CustomCardWidget(
-                                  text:
-                                      'Por favor, asegúrate de que tu rostro se vea correctamente en la imagen. Si no es así, por favor, toma una nueva foto.')
+                                  text: 'Sigue con el proceso como se indica.')
                               : CustomCardWidget(
                                   text:
-                                      'Por favor, tomate una foto de tu rostro para guardar tus datos biometricos de manera correcta.'),
+                                      'Carga tu cédula de ciudadanía para poder seguir con tu registro.'),
                           const SizedBox(height: 25),
                           SizedBox(
                             width: double.infinity,
@@ -132,8 +137,9 @@ class _FaceCaptureState extends State<FaceCapture> {
                                                   color: Colors.green,
                                                   width: 3)),
                                           child: IconButton(
-                                              onPressed: _capturePhoto,
-                                              icon: const Icon(Icons.camera_alt,
+                                              onPressed: _goToWebService,
+                                              icon: const Icon(
+                                                  Icons.restart_alt_rounded,
                                                   size: 24))),
                                       const SizedBox(width: 10),
                                       Expanded(
@@ -141,16 +147,16 @@ class _FaceCaptureState extends State<FaceCapture> {
                                           height: 80,
                                           child: CustomOutlinedButton(
                                             onPressed: _sendPhotos,
-                                            label: 'Enviar foto',
+                                            label: 'Seguir con registro',
                                             iconAlignment: IconAlignment.end,
                                           ),
                                         ),
                                       ),
                                     ],
                                   )
-                                : TakePhotoButton(
-                                    onPressed: _capturePhoto,
-                                    label: 'Tomar foto'),
+                                : GoToWebServiceButton(
+                                    onPressed: _goToWebService,
+                                    label: 'Cargar documento'),
                           ),
                         ]),
                   ),

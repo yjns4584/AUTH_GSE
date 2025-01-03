@@ -1,3 +1,6 @@
+import 'package:app_authgse/features/DocumentCapture/presentation/pages/document_capture.dart';
+import 'package:app_authgse/features/DocumentServiceCapture/presentation/pages/document_service_capture.dart';
+import 'package:app_authgse/features/captureCedula/presentation/pages/capture_user_cedula.dart';
 import 'package:app_authgse/features/userLogin/presentation/pages/user_login.dart';
 import 'package:app_authgse/features/userRegister/presentation/pages/user_register.pages.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +32,7 @@ class InitPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserRegister(),
+                        builder: (context) => const DocumentCaptureWeb(),
                       ),
                     );
                   },

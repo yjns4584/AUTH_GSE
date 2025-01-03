@@ -4,7 +4,7 @@ import 'package:app_authgse/features/userLogin/presentation/widgets/user_login_f
 import 'package:flutter/material.dart';
 
 class UserLogin extends StatefulWidget {
-  const UserLogin({Key? key}) : super(key: key);
+  const UserLogin({super.key});
 
   @override
   State<UserLogin> createState() => _UserLoginState();
