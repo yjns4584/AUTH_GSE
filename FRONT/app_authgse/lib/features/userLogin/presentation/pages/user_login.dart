@@ -48,7 +48,7 @@ class _UserLoginState extends State<UserLogin> {
               passwordController: _passwordController)
         ],
       ),
-      button: SizedBox(
+      bottom: SizedBox(
         width: double.infinity,
         height: 80,
         child: CustomOutlinedButton(

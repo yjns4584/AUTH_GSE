@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class CustomPageTemplate extends StatelessWidget {
   final Widget title;
   final Widget content;
-  final Widget button;
+  final Widget bottom;
 
   const CustomPageTemplate({
     super.key,
     required this.title,
     required this.content,
-    required this.button,
+    required this.bottom,
   });
 
   @override
@@ -21,9 +21,9 @@ class CustomPageTemplate extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           child: Column(
             children: [
-              title, 
-              Expanded(child: content), 
-              button, 
+              title,
+              Expanded(child: content),
+              bottom,
             ],
           ),
         ),

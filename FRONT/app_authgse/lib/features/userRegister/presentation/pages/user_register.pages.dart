@@ -77,7 +77,7 @@ class _UserRegisterState extends State<UserRegister> {
               )
             ],
           ),
-          button: SizedBox(
+          bottom: SizedBox(
               height: 80.0,
               width: double.infinity,
               child: CustomOutlinedButton(

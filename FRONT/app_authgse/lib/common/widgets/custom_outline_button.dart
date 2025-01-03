@@ -5,7 +5,7 @@ class CustomOutlinedButton extends StatelessWidget {
   final String label;
   final IconData? icon;
   final Color foregroundColor;
-  final Color borderColor;
+  final Color? borderColor;
   final double borderWidth;
   final double borderRadius;
   final double widthFactor;
@@ -18,7 +18,7 @@ class CustomOutlinedButton extends StatelessWidget {
     required this.label,
     this.icon,
     this.foregroundColor = Colors.black,
-    this.borderColor = Colors.green,
+    this.borderColor,
     this.borderWidth = 2.5,
     this.borderRadius = 50.0,
     this.widthFactor = 0.7,
@@ -34,7 +34,10 @@ class CustomOutlinedButton extends StatelessWidget {
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           foregroundColor: foregroundColor,
-          side: BorderSide(color: borderColor, width: borderWidth),
+          side: BorderSide(
+            color: borderColor ?? Colors.green,
+            width: borderWidth,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),
