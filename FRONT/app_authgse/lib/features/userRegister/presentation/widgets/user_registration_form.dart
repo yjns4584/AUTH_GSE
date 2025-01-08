@@ -10,6 +10,7 @@ class UserRegistrationForm extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController passwordController;
   final TextEditingController telephoneController;
+  final TextEditingController userGenderController;
 
   const UserRegistrationForm({
     super.key,
@@ -22,6 +23,7 @@ class UserRegistrationForm extends StatelessWidget {
     required this.emailController,
     required this.passwordController,
     required this.telephoneController,
+    required this.userGenderController,
   });
 
   @override
@@ -204,6 +206,25 @@ class UserRegistrationForm extends StatelessWidget {
                   return 'Ingresa un número de teléfono';
                 } else if (!RegExp(r"^\d{10}$").hasMatch(value)) {
                   return 'Ingresa un número de teléfono válido de 10 dígitos';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16.0),
+            TextFormField(
+              controller: userGenderController,
+              enabled: false,
+              decoration: InputDecoration(
+                labelText: 'Género',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                contentPadding:
+                    EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Error de servidor, datos de género no recibidos';
                 }
                 return null;
               },

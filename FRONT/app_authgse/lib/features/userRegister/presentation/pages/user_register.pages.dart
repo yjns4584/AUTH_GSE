@@ -23,6 +23,7 @@ class _UserRegisterState extends State<UserRegister> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _telephoneController = TextEditingController();
+  final _userGenderController = TextEditingController();
 
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _UserRegisterState extends State<UserRegister> {
     _documentTypeController.text = 'CEDULA';
     _lastNameController.text =
         '${widget.parsedResult['last_name'] ?? ''} ${widget.parsedResult['second_last_name'] ?? ''}';
+    _userGenderController.text =
+        widget.parsedResult['gender'] == 'M' ? 'MASCULINO' : 'FEMENINO';
+    logger.info('User Gender: ${_userGenderController.text}');
   }
 
   @override
@@ -61,6 +65,7 @@ class _UserRegisterState extends State<UserRegister> {
       logger.debug('Email: ${_emailController.text}');
       logger.debug('Password: ${_passwordController.text}');
       logger.debug('Telephone: ${_telephoneController.text}');
+      logger.debug('Gender: ${_userGenderController.text}');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Registro completo.')),
       );
@@ -90,6 +95,7 @@ class _UserRegisterState extends State<UserRegister> {
                 emailController: _emailController,
                 passwordController: _passwordController,
                 telephoneController: _telephoneController,
+                userGenderController: _userGenderController,
               )
             ],
           ),
@@ -101,3 +107,4 @@ class _UserRegisterState extends State<UserRegister> {
         ));
   }
 }
+
