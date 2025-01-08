@@ -8,10 +8,14 @@ import 'package:app_authgse/features/userRegister/presentation/pages/user_regist
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Logger logger = Logger();
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Permission.camera.request();
   runApp(const MyApp());
 }
 

@@ -4,6 +4,7 @@ import 'package:app_authgse/features/DocumentCapture/presentation/pages/document
 import 'package:app_authgse/features/DocumentServiceCapture/presentation/widgets/face_display.dart';
 import 'package:app_authgse/features/DocumentServiceCapture/presentation/widgets/take_photo.dart';
 import 'package:app_authgse/features/faceCapture/services/api.service.dart';
+import 'package:app_authgse/features/web_view_container.dart';
 import 'package:app_authgse/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:app_authgse/core/logger.dart';
@@ -27,12 +28,9 @@ class _DocumentCaptureWebState extends State<DocumentCaptureWeb> {
   Future<void> _goToWebService() async {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const DocumentCapture(),
+        builder: (context) => const WebViewContainer(),
       ),
     );
-    setState(() {
-      _showSendButton = true;
-    });
   }
 
   Future<void> _sendPhotos() async {
