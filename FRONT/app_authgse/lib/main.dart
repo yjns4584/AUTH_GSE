@@ -1,4 +1,5 @@
 import 'package:app_authgse/core/theme/app_theme.dart';
+import 'package:app_authgse/features/DocumentCapture/presentation/pages/document_capture.dart';
 import 'package:app_authgse/features/DocumentServiceCapture/presentation/pages/document_service_capture.dart';
 import 'package:app_authgse/features/captureCedula/presentation/pages/capture_user_cedula.dart';
 import 'package:app_authgse/features/faceCapture/presentation/pages/face_capture.pages.dart';
@@ -16,6 +17,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Permission.camera.request();
+  await Permission.storage.request();
   runApp(const MyApp());
 }
 

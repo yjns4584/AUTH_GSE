@@ -2,7 +2,6 @@ import 'package:app_authgse/common/widgets/custom_outline_button.dart';
 import 'package:app_authgse/common/widgets/custom_page_template.dart';
 import 'package:app_authgse/features/DocumentServiceCapture/presentation/pages/document_service_capture.dart';
 import 'package:app_authgse/features/userLogin/presentation/pages/user_login.dart';
-import 'package:app_authgse/features/userRegister/presentation/pages/user_register.pages.dart';
 import 'package:flutter/material.dart';
 
 class InitPage extends StatelessWidget {

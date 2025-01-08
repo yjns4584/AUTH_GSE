@@ -5,7 +5,9 @@ import 'package:app_authgse/features/userRegister/presentation/widgets/user_regi
 import 'package:flutter/material.dart';
 
 class UserRegister extends StatefulWidget {
-  const UserRegister({super.key});
+  const UserRegister({super.key, required this.parsedResult});
+
+  final Map<String, dynamic> parsedResult;
 
   @override
   State<UserRegister> createState() => _UserRegisterState();
@@ -21,6 +23,20 @@ class _UserRegisterState extends State<UserRegister> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _telephoneController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    logger.debug('Parsed Result: ${widget.parsedResult}');
+
+    _documentNumberController.text =
+        widget.parsedResult['document_number'] ?? '';
+    _nameController.text =
+        '${widget.parsedResult['first_name'] ?? ''} ${widget.parsedResult['middle_name'] ?? ''}';
+    _documentTypeController.text = 'CEDULA';
+    _lastNameController.text =
+        '${widget.parsedResult['last_name'] ?? ''} ${widget.parsedResult['second_last_name'] ?? ''}';
+  }
 
   @override
   void dispose() {
