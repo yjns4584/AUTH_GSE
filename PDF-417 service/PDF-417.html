@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="ZXing for JS">
+  <title>Decodificación desde cámara o galería</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <h1>Decodificar imagen</h1>
+  <main class="wrapper">
+    <section class="container" id="demo-content">
+      <form>
+
+        <label for="cameraInput">Tomar una foto:</label>
+        <input type="file" id="cameraInput" name="cameraInput" accept="image/*" capture="environment">
+        <br>
+
+        <label for="galleryInput">Seleccionar desde galería:</label>
+        <input type="file" id="galleryInput" name="galleryInput" accept="image/*">
+        <br>
+
+        <button type="button" class="decodeButton">Seguir con registro</button>
+      </form>
+
+      <label>Resultado:</label>
+      <blockquote>
+        <pre class="result" style="white-space: pre-wrap;"></pre>
+      </blockquote>
+    </section>
+  </main>
+
+  <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+  <script>
+    window.addEventListener('load', function () {
+      const codeReader = new ZXing.BrowserPDF417Reader();
+      const cameraInput = document.getElementById('cameraInput');
+      const galleryInput = document.getElementById('galleryInput');
+      const decodeButton = document.querySelector('.decodeButton');
+      const resultEl = document.querySelector('.result');
+  
+      let selectedFile;
+      window.parsedResult = null; // Hacer que parsedResult esté disponible globalmente
+  
+      cameraInput.addEventListener('change', () => {
+        selectedFile = cameraInput.files[0];
+      });
+  
+      galleryInput.addEventListener('change', () => {
+        selectedFile = galleryInput.files[0];
+      });
+  
+      decodeButton.addEventListener('click', () => {
+        if (!selectedFile) {
+          alert('Por favor, selecciona una imagen o toma una foto primero.');
+          return;
+        }
+  
+        const reader = new FileReader();
+  
+        reader.onload = function (event) {
+          const img = new Image();
+          img.src = event.target.result;
+  
+          img.onload = () => {
+            codeReader.decodeFromImage(img)
+              .then(result => {
+                window.parsedResult = parsePDF417Result(result.text); // Almacenar el resultado parseado globalmente
+                resultEl.textContent = 'Has Terminado :)';
+                console.log(window.parsedResult);
+  
+                fetch('/api/sendResult', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(window.parsedResult)
+                })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Error enviando los datos al servidor');
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  console.log('Respuesta del servidor: ', data);
+                })
+                .catch(err => {
+                  console.error('Error enviando los datos al servidor: ', err);
+                });
+              })
+              .catch(err => {
+                console.error('Error durante la decodificación:', err);
+                resultEl.textContent = 'Error durante la decodificación: ' + err.message;
+              });
+          };
+        };
+  
+        reader.readAsDataURL(selectedFile);
+      });
+  
+      function parsePDF417Result(text) {
+        return {
+          afis_code: cleanString(text.substring(2, 10)),
+          finger_card: cleanString(text.substring(40, 48)),
+          document_number: cleanString(text.substring(48, 58)),
+          last_name: cleanString(text.substring(58, 80)),
+          second_last_name: cleanString(text.substring(81, 104)),
+          first_name: cleanString(text.substring(104, 127)),
+          middle_name: cleanString(text.substring(127, 150)),
+          gender: cleanString(text.substring(151, 152)),
+          birth_date: `${cleanString(text.substring(152, 156))}-${cleanString(text.substring(156, 158))}-${cleanString(text.substring(158, 160))}`.replace(/[^0-9-]/g, ''),
+          municipality_code: cleanString(text.substring(160, 162)),
+          department_code: cleanString(text.substring(162, 165)),
+          blood_type: cleanString(text.substring(166, 168))
+        };
+      }
+  
+      function cleanString(str) {
+        return str.replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚ]/g, '').trim();
+        return str.replace(ñ, 'n').trim()
+      }
+    });
+  </script>
+
+</body>
+
+</html>
